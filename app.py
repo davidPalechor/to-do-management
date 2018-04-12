@@ -61,6 +61,7 @@ def load_user(username):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    error = None
     if request.method == 'POST' and form.validate_on_submit():
         user = mongo.db.users.find_one({'username': form.username.data})
         if user:
@@ -69,8 +70,10 @@ def login():
                 login_user(user_obj)
                 session['username'] = user_obj.username
                 return redirect(url_for('.todo_list'))
+            error = "Incorrect Username or Password"
+    print(form.errors)
 
-    return render_template('index.html', form=form)
+    return render_template('index.html', form=form, error=error)
 
 @app.route('/logout')
 def logout():

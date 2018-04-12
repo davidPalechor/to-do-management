@@ -16,22 +16,36 @@
                 <form class="js-login-form" action="{{ url_for ('.login') }}" method="post">
                     {{ form.csrf_token }}
                     <div class="form-group">
-                        <label class="control-label" for="username">Username</label> {{ form.username }}
+                        <label class="control-label" for="username">Username</label>
+                        {{ form.username(class_="form-control") }}
+                        {% if form.errors.username %}
+                        <div class="form-error">
+                            {{ form.errors.username[0] }}
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="form-group">
-                        <label for="username">Password</label> {{ form.password }}
+                        <label for="username">Password</label>
+                        {{ form.password(class_="form-control") }}
+                        {% if form.errors.password %}
+                        <div class="form-error">
+                            {{ form.errors.password[0] }}
+                        </div>
+                        {% endif %}
                     </div>
                     <button class="btn btn-primary" type="submit">Login</button>
                     <a href="{{ url_for ('register') }}">Sign up</a>
                 </form>
             </div>
+            {% if error %}
             <div class="row">
+                {{ error }}
             </div>
+            {% endif %}
         </div>
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="{{ url_for ('static', filename = 'js/login_form.js') }}"></script>
 
 </html>
