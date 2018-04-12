@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Signup</h1>
+        </div>
+        <div class="content">
+            <div class="row">
+                <form class="js-register-form" action="">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="id_username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="id_password" required>
+                    </div>
+                    <button class="btn btn-primary">Sign up</button>
+                    <div class="form-error"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="{{ url_for ('static', filename = 'js/register_form.js') }}"></script>
+
+</html>

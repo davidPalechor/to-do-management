@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>To-do list | Login</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Login</h1>
+        </div>
+        <div class="content">
+            <div class="row">
+                <form class="js-login-form" action="{{ url_for ('.login') }}" method="post">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        <label class="control-label" for="username">Username</label> {{ form.username }}
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Password</label> {{ form.password }}
+                    </div>
+                    <button class="btn btn-primary" type="submit">Login</button>
+                    <a href="{{ url_for ('register') }}">Sign up</a>
+                </form>
+            </div>
+            <div class="row">
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="{{ url_for ('static', filename = 'js/login_form.js') }}"></script>
+
+</html>

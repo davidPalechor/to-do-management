@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Todo-list | Dashboard</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome {{ username }}</h1>
+            <a href="{{ url_for ('.logout') }}">Log out</a>
+        </div>
+        <div class="content">
+            <div class="row">
+                <ul>
+                    {% for item in todo_list %}
+                    <li>
+                        <input class="js-task-check" type="checkbox" name="task_{{ item._id }}" id="task_{{ item._id }}" onclick="completeTask('{{ item._id }}')" {% if item.completed %}checked{% endif %}>
+                        <label for="task_{{ item._id }}">{{ item.title }}</label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" id="js-add-todo">Add New To-Do</button>
+            </div>
+            <div class="row js-new-input-form">
+                <input class="js-new-todo-input" type="text">
+                <button class="btn btn-primary" id="js-add-task">+</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script>
+    function completeTask(id) {
+        var data = {}
+        if ($('#task_' + id).is(':checked')) {
+            data = {
+                'id': id,
+                'completed': true
+            }
+        } else {
+            data = {
+                'id': id,
+                'completed': false
+            }
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ url_for (".complete_task") }}',
+            data: JSON.stringify(data),
+            contentType: 'application/json'
+        })
+    }
+
+    $(function() {
+        $('.js-new-input-form').hide()
+        $('#js-add-todo').on('click', function() {
+            $('.js-new-input-form').show()
+        })
+
+        $('#js-add-task').on('click', function() {
+            $.ajax({
+                type: 'POST',
+                url: '{{ url_for (".add_task") }}',
+                data: JSON.stringify({
+                    'title': $(".js-new-todo-input").val()
+                }),
+                contentType: 'application/json',
+                success: function(response) {
+                    if (response.ok) {
+                        location.reload()
+                    }
+                }
+            })
+        })
+    });
+</script>
+
+</html>
